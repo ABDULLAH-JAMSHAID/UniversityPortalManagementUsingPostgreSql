@@ -117,7 +117,12 @@ public class AdminController {
             System.out.println("7:  Delete Course");
             System.out.println("8:  Delete Teacher");
             System.out.println("9:  Mark Attendance");
-            System.out.println("10: Exit");
+            System.out.println("10: Course Wise Student Count");
+            System.out.println("11: Count Courses Enrolled By Teacher");
+            System.out.println("12: Student Attendance Count");
+            System.out.println("13: Teacher Attendance Count");
+            System.out.println("14: Students Attendance Percentage()");
+            System.out.println("15: Exit");
 
             System.out.println("Enter Choice");
 
@@ -154,6 +159,20 @@ public class AdminController {
                     adminService.markTeachersAttendance();
                     break;
                 case 10:
+                   adminService.courseWiseStudentCount();
+                    break;
+                case 11:
+                    adminService.countCoursesEnrolledByTeacher();
+                    break;
+                case 12:
+                    adminService.studentAttendanceCount();
+                    break;
+                case 13:
+                    adminService.teacherAttendanceCount();
+                    break;
+                case 14:
+                    adminService.studentsAttendancePercentage();
+                case 15:
                     return;
                 default:
                     System.out.println("Please Enter Valid Choice");

@@ -309,4 +309,22 @@ public class AdminRepository {
             e.printStackTrace();
         }
     }
+
+    public void courseWiseStudentCount(){
+
+    }
+
+    public void countCoursesEnrolledByTeacher(){
+
+    }
+
+    public void studentAttendanceCount(){
+
+    }
+    public void teacherAttendanceCount(){
+
+    }
+    public void studentsAttendancePercentage(){
+
+    }
 }

@@ -61,4 +61,20 @@ public class AdminService {
 
         adminRepository.markTeachersAttendance();
     }
+
+    public void courseWiseStudentCount(){
+        adminRepository.courseWiseStudentCount();
+    }
+    public void countCoursesEnrolledByTeacher(){
+        adminRepository.countCoursesEnrolledByTeacher();
+    }
+    public void studentAttendanceCount(){
+        adminRepository.studentAttendanceCount();
+    }
+    public void teacherAttendanceCount(){
+        adminRepository.teacherAttendanceCount();
+    }
+    public void studentsAttendancePercentage(){
+        adminRepository.studentsAttendancePercentage();
+    }
 }
