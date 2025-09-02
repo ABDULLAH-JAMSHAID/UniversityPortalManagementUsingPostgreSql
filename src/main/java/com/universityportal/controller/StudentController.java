@@ -70,7 +70,7 @@ public class StudentController {
             System.out.println("3: View Your Profile");
             System.out.println("4: View My Attendance");
             System.out.println("5: Update Your Profile");
-            System.out.println("6: View My Picked COurse");
+            System.out.println("6: View My Picked Course");
             System.out.println("7: Exit");
             System.out.println("Enter Your Choice");
 

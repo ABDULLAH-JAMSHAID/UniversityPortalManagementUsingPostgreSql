@@ -105,4 +105,8 @@ public class TeacherService {
     public void updateEmail(int teacherId){
      teacherRepository.updateEmail(teacherId);
     }
+
+    public void editStudentAttendance(int teacherId){
+        teacherRepository.editStudentAttendance(teacherId);
+    }
 }

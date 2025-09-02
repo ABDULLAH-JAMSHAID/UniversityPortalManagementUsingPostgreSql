@@ -131,10 +131,10 @@ public class StudentRepository {
             int rows=preparedStatement.executeUpdate();
 
             if (rows>0){
-                System.out.println("Enrolled Successfully");
-
+                System.out.println("Enrolled");
             }
-            else System.out.println("Failed To Enroll");
+
+
 
 
 
@@ -239,11 +239,11 @@ public class StudentRepository {
 
             int rows=preparedStatement.executeUpdate();
 
-            if (rows>0){
+
                 System.out.println("Updated Successfully");
-            }else System.out.println("Failed To Update");
 
         }catch (SQLException e){
+            System.out.println("Update Failed");
             e.printStackTrace();
         }
     }

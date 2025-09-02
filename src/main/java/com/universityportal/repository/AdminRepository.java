@@ -310,21 +310,125 @@ public class AdminRepository {
         }
     }
 
+
+
     public void courseWiseStudentCount(){
+        try{
+            Connection connection=DBConnection.getConnection();
 
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.CourseWiseStudentCount);
+
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                String course_name=rs.getString("course_name");
+
+                int total_students=rs.getInt("total_students");
+
+                System.out.println("Course Name : "+course_name+" Total Students : "+total_students);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-
     public void countCoursesEnrolledByTeacher(){
 
-    }
+        try{
+            Connection connection=DBConnection.getConnection();
 
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.CountCoursesOfTeacher);
+
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                String teacher_name=rs.getString("teacher");
+
+                int total_courses_assigned=rs.getInt("total_courses_assigned");
+
+                System.out.println("Teacher : "+teacher_name+" Total Courses Assigned : "+total_courses_assigned);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
     public void studentAttendanceCount(){
+
+        try{
+            Connection connection=DBConnection.getConnection();
+
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.StudentAttendanceCount);
+
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                String student_name=rs.getString("student_name");
+                String present=rs.getString("present");
+                String absent=rs.getString("absent");
+                String late=rs.getString("late");
+
+                System.out.println("Student Name: "+student_name+" Present : "+present+" Absent : "+absent+" Late : "+late);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
     public void teacherAttendanceCount(){
 
+        try{
+            Connection connection=DBConnection.getConnection();
+
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.TeacherAttendanceCount);
+
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                String teacher_name=rs.getString("teacher_name");
+                String present=rs.getString("present");
+                String absent=rs.getString("absent");
+                String late=rs.getString("late");
+
+                System.out.println("Teacher Name: "+teacher_name+" Present : "+present+" Absent : "+absent+" Late : "+late);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
     public void studentsAttendancePercentage(){
+
+        try{
+            Connection connection=DBConnection.getConnection();
+
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.StudentsAttendancePercentage);
+
+            ResultSet rs=preparedStatement.executeQuery();
+
+            while (rs.next()){
+
+                int student_id=rs.getInt("student_id");
+
+                String student_name=rs.getString("student_name");
+                int total_classes=rs.getInt("total_classes");
+                int total_present=rs.getInt("total_present");
+                int present_percentage=rs.getInt("present_percentage");
+
+                System.out.println("Student Id "+student_id+" Student Name : "+student_name+" Total Classes : "+total_classes+" Total Present : "+total_present+
+                        " Present Percentage : "+present_percentage);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

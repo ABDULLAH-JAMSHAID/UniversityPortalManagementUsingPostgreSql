@@ -85,7 +85,8 @@ public class TeacherController {
             System.out.println("7: View My Attendance");
             System.out.println("8: View Your Profile");
             System.out.println("9: Update Your Profile");
-            System.out.println("10: Exit");
+            System.out.println("10: Edit Attendance");
+            System.out.println("11: Exit");
             System.out.println("Enter Your Choice");
 
 
@@ -129,6 +130,9 @@ public class TeacherController {
                     teacherService.updateYourProfile(teacherId);
                     break;
                 case 10:
+                    teacherService.editStudentAttendance(teacherId);
+                    break;
+                case 11:
                     return;
                 default:
                     System.out.println("Enter Valid Choice");

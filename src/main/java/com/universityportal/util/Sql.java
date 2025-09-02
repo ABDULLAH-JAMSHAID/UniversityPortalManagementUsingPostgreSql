@@ -34,25 +34,38 @@ public class Sql {
             "\n" +
             "where tc.course_id=?;";
 
+//    public static final String enrollingStudent = "INSERT INTO ums.enrollments " +
+//            "(student_id ,teacher_course_id ) VALUES (?,?)";
 
-    public static final String enrollingStudent = "INSERT INTO ums.enrollments " +
-            "(student_id ,teacher_course_id ) VALUES (?,?)";
+    // Procedure
+
+    public static final String enrollingStudent = "call ums.enrolling_student(? , ?)";
 
     public static final String viewProfile="select id ,name,email from ums.students where id=?";
 
+
+
     public static final String viewStudentPickedCourse = "SELECT c.title AS course_title\n" +
-            "            FROM ums.enrollments e\n" +
-            "            JOIN ums.teacher_course tc on tc.id=e.id \n" +
-            "            join ums.courses c on c.id=tc.course_id\n" +
-            "            WHERE e.student_id = ?;";
+            "FROM ums.enrollments e\n" +
+            "JOIN ums.teacher_course tc ON tc.id = e.teacher_course_id\n" +
+            "JOIN ums.courses c ON c.id = tc.course_id\n" +
+            "WHERE e.student_id = ?";
 
     public static final String getEnrollmentId ="select e.id as enrollment_id from ums.enrollments e where student_id=?";
 
-    public static final String viewStudentAttendance = "SELECT attendance_date,status from ums.students_attendance where enrollment_id=?";
 
-    public static final String updateStudentName = "UPDATE ums.students\n" +
-            "SET name = ?\n" +
-            "WHERE id = ?;";
+    public static final String viewStudentAttendance = "SELECT sa.status,\n" +
+            "sa.attendance_date\n" +
+            "from ums.students_attendance sa\n" +
+            "where sa.enrollment_id=?;";
+
+//    public static final String updateStudentName = "UPDATE ums.students\n" +
+//            "SET name = ?\n" +
+//            "WHERE id = ?;";
+
+    // Procedure
+
+    public static final String updateStudentName = "call ums.updating_student_name(?,?)";
 
     public static final String updateStudentEmail = "UPDATE ums.students\n" +
             "SET email = ?\n" +
@@ -61,11 +74,8 @@ public class Sql {
     public static final String enrollingTeacher = "INSERT INTO ums.teacher_course " +
             "(teacher_id ,course_id ) VALUES (?,?)";
 
-
-    public static final String viewPickedCourses = "SELECT tc.id as teacher_course_id ,c.title AS course_title\n" +
-            "FROM ums.teacher_course tc\n" +
-            "JOIN ums.courses c ON c.id = tc.course_id\n" +
-            "WHERE tc.teacher_id = ?;";
+// function
+    public static final String viewPickedCourses = "SELECT * FROM ums.get_teacher_courses(?);";
 
     public static final String unselectCourse = "DELETE FROM ums.teacher_course WHERE id=?";
 
@@ -73,6 +83,23 @@ public class Sql {
             "FROM ums.enrollments e\n" +
             "JOIN ums.students s ON e.student_id = s.id\n" +
             "WHERE e.teacher_course_id = ?;";
+
+    public static final String viewStudentsInMyCourse = "SELECT \n" +
+            "    sa.id AS sa_id,\n" +
+            "    s.name AS student_name,\n" +
+            "    sa.attendance_date,\n" +
+            "    sa.status AS attendance_status\n" +
+            "FROM ums.enrollments e\n" +
+            "JOIN ums.students s \n" +
+            "    ON e.student_id = s.id\n" +
+            "LEFT JOIN ums.students_attendance sa \n" +
+            "    ON sa.enrollment_id = e.id\n" +
+            "   AND sa.attendance_date = ? \n" +
+            "WHERE e.teacher_course_id = ?;";
+
+    public static final String UpdateStudentAttendance =
+            "update ums.students_attendance sa set status = ?::ums.attendance_status where sa.id = ?";
+
 
     public static final String insertStudentAttendances =
             "INSERT INTO ums.students_attendance (enrollment_id,attendance_date, status) " +

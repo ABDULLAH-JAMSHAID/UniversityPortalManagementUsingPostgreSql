@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -347,6 +346,91 @@ public class TeacherRepository {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+   public void viewStudentsInMyCourse(int teacherId){
+
+       try{
+
+           viewMyPickedCourses(teacherId);
+
+           System.out.println("Enter Id");
+
+           int teacher_course_id=sc.nextInt();
+           sc.nextLine();
+
+           System.out.println("Enter Attendance Date");
+           String date=sc.nextLine();
+
+           java.sql.Date sqlDate=java.sql.Date.valueOf(date);
+
+
+           Connection connection=DBConnection.getConnection();
+
+           PreparedStatement preparedStatement=connection.prepareStatement(Sql.viewStudentsInMyCourse);
+
+           preparedStatement.setDate(1,sqlDate);
+           preparedStatement.setInt(2,teacher_course_id);
+
+           ResultSet rs=preparedStatement.executeQuery();
+
+           while (rs.next()){
+
+               int students_attendance_id=rs.getInt("sa_id");
+
+               String student_name=rs.getString("student_name");
+
+               String attendance_date=rs.getString("attendance_date");
+
+               String attendance_status=rs.getString("attendance_status");
+
+               System.out.println("Enrollment ID : "+students_attendance_id+" Student Name : "+student_name+" Date : "+attendance_date+" Status : "+attendance_status);
+           }
+
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+
+   }
+
+    public void viewStudentsAttendance(int teacherId ){
+        viewStudentsInMyCourse(teacherId);
+
+        System.out.println("Enter Id Of Which You Want To Update Attendance");
+
+        int attendance_id=sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Enter Status --->> present/absent/late");
+
+        String status=sc.nextLine();
+
+        try{
+            Connection connection=DBConnection.getConnection();
+            PreparedStatement preparedStatement=connection.prepareStatement(Sql.UpdateStudentAttendance);
+
+            preparedStatement.setString(1,status);
+
+            preparedStatement.setInt(2,attendance_id);
+           int rows= preparedStatement.executeUpdate();
+
+           if (rows>0){
+               System.out.println("Updated Successfully");
+           }else System.out.println("Failed To Update");
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void editStudentAttendance(int teacherId){
+
+        viewStudentsAttendance(teacherId);
+
     }
 
 }
