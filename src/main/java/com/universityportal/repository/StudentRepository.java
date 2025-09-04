@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+
 public class StudentRepository {
 
     Scanner sc=new Scanner(System.in);
@@ -96,51 +97,68 @@ public class StudentRepository {
         }
     }
 
-    public void pickYourCourse(int courseId){
+    public void pickYourCourse() {
 
-        try{
+        viewAllCourses();
 
-            Connection connection=DBConnection.getConnection();
+        System.out.println("Enter Course ID");
 
-            PreparedStatement preparedStatement=connection.prepareStatement(Sql.viewRelevantTeachers);
+        int courseId = sc.nextInt();
 
-            preparedStatement.setInt(1,courseId);
+        try {
+
+            Connection connection = DBConnection.getConnection();
+
+            PreparedStatement preparedStatement = connection.prepareStatement(Sql.viewRelevantTeachers);
+
+            preparedStatement.setInt(1, courseId);
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            while (rs.next()){
+            PreparedStatement preparedStatement1=connection.prepareStatement(Sql.checkIfTeacherPresent);
 
-                int teacher_course_id=rs.getInt("teacher_id");
+            preparedStatement1.setInt(1,courseId);
 
-                String teacher_name=rs.getString("teacher_name");
+            ResultSet rs1=preparedStatement1.executeQuery();
+
+            if (!rs.isBeforeFirst()){
+                System.out.println("Currently No teacher Present in this Course");
+                return;
+            }
+
+            while (rs.next()) {
+
+                int teacher_course_id = rs.getInt("teacher_id");
+
+                String teacher_name = rs.getString("teacher_name");
 
 
-                System.out.println("Id : "+teacher_course_id+" Teacher Name : "+teacher_name);
+                System.out.println("Id : " + teacher_course_id + " Teacher Name : " + teacher_name);
             }
 
             System.out.println("Enter Id Of Teacher From Which You Want To Study");
 
-            int teacher_course_id=sc.nextInt();
+            int teacher_course_id = sc.nextInt();
             sc.nextLine();
 
-            preparedStatement=connection.prepareStatement(Sql.enrollingStudent);
+            preparedStatement = connection.prepareStatement(Sql.enrollingStudent);
 
-            preparedStatement.setInt(1,Session.CurrentStudentId);
-            preparedStatement.setInt(2,teacher_course_id);
+            preparedStatement.setInt(1, Session.CurrentStudentId);
+            preparedStatement.setInt(2, teacher_course_id);
 
-            int rows=preparedStatement.executeUpdate();
+            int rows = preparedStatement.executeUpdate();
 
-            if (rows>0){
+            if (rows > 0) {
                 System.out.println("Enrolled");
             }
-
-
-
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
+        } catch (SQLException e) {
+            if ("P0001".equals(e.getSQLState())) {
+                System.out.println("Student already enrolled in this course");
+            } else {
+                e.printStackTrace();
+            }
         }
+
 
     }
 

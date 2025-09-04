@@ -121,7 +121,7 @@ public class AdminController {
             System.out.println("11: Count Courses Enrolled By Teacher");
             System.out.println("12: Student Attendance Count");
             System.out.println("13: Teacher Attendance Count");
-            System.out.println("14: Students Attendance Percentage()");
+            System.out.println("14: Students Attendance Percentage");
             System.out.println("15: Exit");
 
             System.out.println("Enter Choice");

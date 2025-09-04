@@ -43,13 +43,10 @@ public class StudentService {
 
     public void pickYourCourse(){
 
-        viewAllCourses();
 
-        System.out.println("Enter Course ID");
 
-        int courseId= sc.nextInt();
 
-        studentRepository.pickYourCourse(courseId);
+        studentRepository.pickYourCourse();
     }
 
     public void viewProfile(int studentId){

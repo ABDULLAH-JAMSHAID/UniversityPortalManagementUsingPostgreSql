@@ -74,6 +74,8 @@ public class Sql {
     public static final String enrollingTeacher = "INSERT INTO ums.teacher_course " +
             "(teacher_id ,course_id ) VALUES (?,?)";
 
+    public static final String checkIfTeacherPresent="select teacher_id from ums.teacher_course where course_id=?;";
+
 // function
     public static final String viewPickedCourses = "SELECT * FROM ums.get_teacher_courses(?);";
 
